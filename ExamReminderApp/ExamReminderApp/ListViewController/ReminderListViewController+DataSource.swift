@@ -8,6 +8,7 @@
 import UIKit
 
 extension ReminderListViewController {
+    //Эти типы позволяют определить дифферинцируемый источник данных и моментальные снимки для данных напоминания
     typealias DataSource = UICollectionViewDiffableDataSource<Int, Reminder.ID>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Int, Reminder.ID>
     
@@ -39,12 +40,14 @@ extension ReminderListViewController {
         backgroundConfiguration.backgroundColor = .gray
         cell.backgroundConfiguration = backgroundConfiguration
     }
+    //Функция использует Reminder.ID для получения напоминания из модели
     func completeReminder(with id: Reminder.ID) {
         var reminder = reminder(for: id)
         reminder.isComplete.toggle()
         update(reminder, with: id)
         updateSnapshot(reloading: [id])
     }
+    //Добавление кнопки, указывающие, выполнено напоминание или нет
     private func doneButtonConfiguration(for reminder: Reminder) -> UICellAccessory.CustomViewConfiguration {
         let symbolName = reminder.isComplete ? "checkmark.circle.fill" : "circle"
         let symbloConfiguration = UIImage.SymbolConfiguration(textStyle: .title1)
@@ -62,9 +65,9 @@ extension ReminderListViewController {
                 reminders = try await reminderStore.readAll()
                 NotificationCenter.default.addObserver(self, selector: #selector(eventStoreChanged(_:)), name: .EKEventStoreChanged, object: nil)
             } catch TodayError.accessDenied, TodayError.accessRestricted {
-#if DEBUG
+                #if DEBUG
                 reminders = Reminder.sampleData
-#endif
+                #endif
             } catch {
                 showError(error)
             }
@@ -113,5 +116,6 @@ extension ReminderListViewController {
         }
     }
 }
+
 
 

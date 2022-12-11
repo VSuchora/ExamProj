@@ -9,6 +9,8 @@ import UIKit
 
 class ReminderListViewController: UICollectionViewController {
     var dataSource: DataSource!
+    
+    //Свойство reminders хранит массив экземпляров Reminder, инициализируемый с sampleData
     var reminders: [Reminder] = Reminder.sampleData
     var filteredReminders: [Reminder] {
         return reminders.filter { listStyle.shouldInclude(date: $0.dueDate) }.sorted { $0.dueDate < $1.dueDate }
@@ -28,6 +30,7 @@ class ReminderListViewController: UICollectionViewController {
         
         let cellRegistration = UICollectionView.CellRegistration(handler: cellRegistrationHandler)
         
+        //Reminder.ID - это ассоциированный тип протокола Identifiable. Это псевдоним типа String в случае Reminder
         dataSource = DataSource(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, itemIdentifier: Reminder.ID) in
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
         }
@@ -72,6 +75,8 @@ class ReminderListViewController: UICollectionViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    //Функция создает новую переменную конфигурации списка с группированным видом.
+    //UICollectionLayoutListConfiguration создает секцию в макете списка
     private func listLayout() -> UICollectionViewCompositionalLayout {
         var listConfiguration = UICollectionLayoutListConfiguration(appearance: .grouped)
         listConfiguration.showsSeparators = false

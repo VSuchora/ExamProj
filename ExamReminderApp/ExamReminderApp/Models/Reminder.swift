@@ -6,6 +6,7 @@
 //
 
 import Foundation
+//Свойство id создано, чтобы идентифицировать конкретное напоминание, даже если его название или статус завершения меняется
 
 struct Reminder: Equatable, Identifiable {
     var id: String = UUID().uuidString
@@ -14,8 +15,9 @@ struct Reminder: Equatable, Identifiable {
     var notes: String? = nil
     var isComplete: Bool = false
 }
-
+//Расширение на Array, где элемент является напоминанием
 extension Array where Element == Reminder {
+    //Функция возвращает индекс определенного напоминания
     func indexOfReminder(with id: Reminder.ID) -> Self.Index {
         guard let index = firstIndex(where: { $0.id == id }) else {
             fatalError()
@@ -33,3 +35,5 @@ extension Reminder {
         Reminder(title: "Gachi gym", dueDate: Date().addingTimeInterval(3200.0), notes: "New friends", isComplete: true)]
 }
 #endif
+
+

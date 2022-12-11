@@ -7,6 +7,7 @@
 
 import Foundation
 
+//Форматирования даты, чтобы отобразить точную информацию о дате и времени для каждой локали пользователя
 extension Date {
     var dayAndTimeText: String {
         let timeText = formatted(date: .omitted, time: .shortened)
