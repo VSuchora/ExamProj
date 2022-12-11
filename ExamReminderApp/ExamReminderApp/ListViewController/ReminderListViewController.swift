@@ -76,7 +76,6 @@ class ReminderListViewController: UICollectionViewController {
     }
     
     //Функция создает новую переменную конфигурации списка с группированным видом.
-    //UICollectionLayoutListConfiguration создает секцию в макете списка
     private func listLayout() -> UICollectionViewCompositionalLayout {
         var listConfiguration = UICollectionLayoutListConfiguration(appearance: .grouped)
         listConfiguration.showsSeparators = false
